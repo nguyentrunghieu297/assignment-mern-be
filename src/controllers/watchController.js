@@ -98,8 +98,25 @@ const watchController = {
 
   deleteWatch: async (req, res) => {
     try {
-      const watch = await Watch.findByIdAndDelete(req.params.id);
+      const watch = await Watch.findById(req.params.id).populate('brand');
+
       if (!watch) {
+        return res.status(404).json({
+          success: false,
+          message: 'Watch not found',
+        });
+      }
+
+      // Kiểm tra xem đồng hồ có liên kết với brand hay không
+      if (watch.brand) {
+        return res.status(400).json({
+          success: false,
+          message: 'Cannot delete watch with an associated brand',
+        });
+      }
+
+      const watchDelete = await Watch.findByIdAndDelete(req.params.id);
+      if (!watchDelete) {
         return res.status(404).json({
           success: false,
           message: 'Watch not found',
@@ -108,7 +125,7 @@ const watchController = {
       res.status(200).json({
         success: true,
         message: 'Watch has been deleted successfully',
-        data: watch,
+        data: watchDelete,
       });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
