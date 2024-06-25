@@ -1,16 +1,10 @@
 const Watch = require('../models/Watch');
 const Brand = require('../models/Brand');
 const mongoose = require('mongoose');
-const {
-  multipleMongooseToObject,
-  mongooseToObject,
-} = require('../utils/mongoose');
 
 const watchController = {
   getWatch: async (req, res) => {
     try {
-      // const watch = await Watch.find().populate('brand');
-      // const brand = await Brand.find();
       const selectedBrandId = req.query.selectedBrandId || null;
       const searchQuery = req.query.searchQuery || null;
 
