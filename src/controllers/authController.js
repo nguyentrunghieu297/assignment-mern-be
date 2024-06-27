@@ -120,7 +120,6 @@ const authController = {
       // Lấy token từ header Authorization
       const authHeader = req.headers['authorization'];
       const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
-
       if (!token) {
         return res.status(401).json({
           message: 'Unauthorized: No token provided',
@@ -148,7 +147,7 @@ const authController = {
 
         const authUser = {
           id: user._id,
-          fullName: user.fullName,
+          name: user.name,
           dob: user.dob,
           username: user.username,
           isAdmin: user.isAdmin,

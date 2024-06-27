@@ -5,7 +5,7 @@ const memberSchema = new mongoose.Schema(
     username: { type: String, required: true, unique: true, min: 6, max: 20 },
     password: { type: String, required: true, min: 6 },
     name: { type: String, required: true },
-    dob: { type: Date },
+    dob: { type: Date, default: Date.now() },
     isAdmin: { type: Boolean, default: false },
     profilePic: {
       type: String,
