@@ -11,6 +11,16 @@ const commentController = {
         return res.status(404).json({ message: 'Watch not found' });
       }
 
+      const existingComment = watch.comments.find(
+        (comment) => comment.author.toString() === author.toString()
+      );
+      if (existingComment) {
+        return res.status(400).json({
+          success: false,
+          message: 'You have already commented on this product',
+        });
+      }
+
       const newComment = {
         rating,
         content,
